@@ -4,6 +4,18 @@ const typeDefs = gql`
   type Query {
     tracksForHome: [Track!]!
     track(id: ID!): Track!
+    module(id: ID!): Module!
+  }
+
+  type Mutation {
+    incrementTrackViews(id: ID!): IncrementTrackViewsResponse!
+  }
+
+  type IncrementTrackViewsResponse {
+    code: Int!
+    success: Boolean!
+    message: String!
+    track: Track
   }
 
   type Track {
@@ -28,6 +40,8 @@ const typeDefs = gql`
     id: ID!
     title: String!
     length: Int
+    content: String
+    videoUrl: String
   }
 `;
 
