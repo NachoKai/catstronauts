@@ -2,19 +2,20 @@ import React from "react";
 import styled from "@emotion/styled";
 import { colors, mq } from "../styles";
 import { humanReadableTimeFromSeconds } from "../utils/helpers";
+import { Link } from "@reach/router";
 
 const TrackCard = ({ track }) => {
-  const { title, thumbnail, author, length, modulesCount } = track;
+  const { title, thumbnail, author, length, modulesCount, id } = track;
 
   return (
-    <Container>
-      <Content>
-        <ImageContainer>
-          <Image src={thumbnail} alt={title} />
-        </ImageContainer>
-        <Body>
-          <Title>{title || ""}</Title>
-          <Footer>
+    <CardContainer to={`/track/${id}`}>
+      <CardContent>
+        <CardImageContainer>
+          <CardImage src={thumbnail} alt={title} />
+        </CardImageContainer>
+        <CardBody>
+          <CardTitle>{title || ""}</CardTitle>
+          <CardFooter>
             <AuthorImage src={author.photo} />
             <AuthorAndTrack>
               <AuthorName>{author.name}</AuthorName>
@@ -22,16 +23,16 @@ const TrackCard = ({ track }) => {
                 {modulesCount} modules - {humanReadableTimeFromSeconds(length)}
               </TrackLength>
             </AuthorAndTrack>
-          </Footer>
-        </Body>
-      </Content>
-    </Container>
+          </CardFooter>
+        </CardBody>
+      </CardContent>
+    </CardContainer>
   );
 };
 
 export default TrackCard;
 
-const Container = styled.div({
+const CardContainer = styled(Link)({
   borderRadius: 6,
   color: colors.text,
   backgroundSize: "cover",
@@ -58,16 +59,17 @@ const Container = styled.div({
     backgroundColor: colors.pink.lightest,
   },
   cursor: "pointer",
+  textDecoration: "none",
 });
 
-const Content = styled.div({
+const CardContent = styled.div({
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
   height: "100%",
 });
 
-const Title = styled.h3({
+const CardTitle = styled.h3({
   textAlign: "center",
   fontSize: "1.4em",
   lineHeight: "1em",
@@ -76,7 +78,7 @@ const Title = styled.h3({
   flex: 1,
 });
 
-const ImageContainer = styled.div({
+const CardImageContainer = styled.div({
   height: 220,
   position: "relative",
   "::after": {
@@ -90,14 +92,14 @@ const ImageContainer = styled.div({
   },
 });
 
-const Image = styled.img({
+const CardImage = styled.img({
   objectFit: "cover",
   width: "100%",
   height: "100%",
   filter: "grayscale(60%)",
 });
 
-const Body = styled.div({
+const CardBody = styled.div({
   padding: 18,
   flex: 1,
   display: "flex",
@@ -106,7 +108,7 @@ const Body = styled.div({
   justifyContent: "space-around",
 });
 
-const Footer = styled.div({
+const CardFooter = styled.div({
   display: "flex",
   flexDirection: "Row",
 });
